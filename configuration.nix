@@ -19,6 +19,13 @@
   # Zaman Dilimi ve Konsol Klavye Düzeni
   time.timeZone = "Europe/Istanbul";
   console.keyMap = "trq";
+  
+  # Otomatik Çöp Toplama (Garbage Collection)
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";       
+    options = "--delete-older-than 7d"; 
+  };
 
   # X11 Görsel Sunucu ve Grafik Arayüz Ayarları (LightDM & Qtile)
   services.xserver = {
