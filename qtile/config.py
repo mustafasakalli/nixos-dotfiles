@@ -59,7 +59,7 @@ keys = [
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
-    Key([mod], "b", lazy.spawn("firefox"), desc="Firefox"),
+    Key([mod], "b", lazy.spawn("vivaldi"), desc="vivaldi"),
     Key([mod], "d", lazy.spawn("rofi -show drun"), desc="Start rofi"),
     
     # Shift + Mod + Sağ/Sol Ok Tuşları ile Masaüstleri (Workspace) Arasında Geziş

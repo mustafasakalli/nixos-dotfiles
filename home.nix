@@ -46,5 +46,6 @@
     fastfetch
     pcmanfm
     git
+    vivaldi
   ];
 }

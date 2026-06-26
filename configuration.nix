@@ -9,6 +9,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
+  
+  # Unfree (mülk/kapalı kaynak) paketlere izin ver (Vivaldi için şart)
+  nixpkgs.config.allowUnfree = true;
 
   # Ağ Ayarları
   networking.networkmanager.enable = true;
@@ -47,7 +50,6 @@
   };
 
   # Sistem Genelinde Aktif Edilen Programlar
-  programs.firefox.enable = true;
   programs.zsh.enable = true;
   
   # Flakes ve yeni Nix komutlarını aktif ediyoruz
