@@ -35,7 +35,10 @@
       ll = "ls -l";
       nrs = "sudo nixos-rebuild switch --flake ~/dotfiles#nixos"; 
       nfu = "nix flake update ~/dotfiles";                        
-      qtile-bak = "geany ~/dotfiles/qtile/config.py";              
+      qtile-bak = "geany ~/dotfiles/qtile/config.py";    
+      gs  = "git status";
+	  gcm = "git commit -m";
+      ga  = "git add .";          
     };
   };
   
