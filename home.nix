@@ -50,5 +50,6 @@
     pcmanfm
     git
     micro
+    nsxiv
   ];
 }
