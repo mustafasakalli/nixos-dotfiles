@@ -55,12 +55,7 @@
       iosevka
     ];
   };
-  
-  # Sistem Font Yapılandırması
-  fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
-  ];
-  
+
   programs.firefox.enable = true;
 
   # Sistem Genelinde Aktif Edilen Programlar

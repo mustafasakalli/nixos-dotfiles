@@ -10,51 +10,50 @@ from libqtile.utils import guess_terminal
 mod = "mod4"
 terminal = guess_terminal()
 
-# Tüm widget'larda ortak font kullanmak için
-DEFAULT_FONT = "JetBrains Mono"
+# Tüm widget'larda ortak kullanılacak Nerd Font tanımı
+DEFAULT_FONT = "JetBrainsMono Nerd Font"
+
+# r/unixporn dünyasının en popüler pastel renk paleti (Catppuccin Mocha)
+colors = {
+    "bg":       "#1e1e2e",  # Koyu Arka Plan (Mocha Base)
+    "fg":       "#cdd6f4",  # Ön Plan Yazı Rengi
+    "crust":    "#11111b",  # En koyu ton
+    "cyan":     "#89dceb",  # Taglar / Pencereler için
+    "pink":     "#f5c2e7",  # RAM için
+    "mauve":    "#cba6f7",  # CPU için
+    "green":    "#a6e3a1",  # Saat/Tarih için
+    "blue":     "#89b4fa",  # İnternet hızı için
+    "red":      "#f38ba8",  # Kapatma butonları için
+}
 
 keys = [
-    # A list of available commands that can be bound to keys can be found
-    # at https://docs.qtile.org/en/latest/manual/config/lazy.html
     # Switch between windows
     Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
     Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
     Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
+    
     # Move windows between left/right columns or move up/down in current stack.
-    # Moving out of range in Columns layout will create new column.
     Key([mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"),
     Key([mod, "shift"], "l", lazy.layout.shuffle_right(), desc="Move window to the right"),
     Key([mod, "shift"], "j", lazy.layout.shuffle_down(), desc="Move window down"),
     Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
-    # Grow windows. If current window is on the edge of screen and direction
-    # will be to screen edge - window would shrink.
+    
+    # Grow windows.
     Key([mod, "control"], "h", lazy.layout.grow_left(), desc="Grow window to the left"),
     Key([mod, "control"], "l", lazy.layout.grow_right(), desc="Grow window to the right"),
     Key([mod, "control"], "j", lazy.layout.grow_down(), desc="Grow window down"),
     Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
     Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
-    # Toggle between split and unsplit sides of stack.
-    # Split = all windows displayed
-    # Unsplit = 1 window displayed, like Max layout, but still with
-    # multiple stack panes
-    Key(
-        [mod, "shift"],
-        "Return",
-        lazy.layout.toggle_split(),
-        desc="Toggle between split and unsplit sides of stack",
-    ),
+    
+    Key([mod, "shift"], "Return", lazy.layout.toggle_split(), desc="Toggle between split and unsplit sides of stack"),
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
+    
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
-    Key(
-        [mod],
-        "f",
-        lazy.window.toggle_fullscreen(),
-        desc="Toggle fullscreen on the focused window",
-    ),
+    Key([mod], "f", lazy.window.toggle_fullscreen(), desc="Toggle fullscreen on the focused window"),
     Key([mod], "t", lazy.window.toggle_floating(), desc="Toggle floating on the focused window"),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
@@ -65,12 +64,9 @@ keys = [
     # Shift + Mod + Sağ/Sol Ok Tuşları ile Masaüstleri (Workspace) Arasında Geziş
     Key([mod, "shift"], "Right", lazy.screen.next_group(), desc="Sonraki masaüstüne geç"),
     Key([mod, "shift"], "Left", lazy.screen.prev_group(), desc="Önceki masaüstüne geç"),
-
 ]
 
 # Add key bindings to switch VTs in Wayland.
-# We can't check qtile.core.name in default config as it is loaded before qtile is started
-# We therefore defer the check until the key binding is run by using .when(func=...)
 for vt in range(1, 8):
     keys.append(
         Key(
@@ -81,52 +77,25 @@ for vt in range(1, 8):
         )
     )
 
-
 groups = [Group(i) for i in "123456"]
 
 for i in groups:
     keys.extend(
         [
             # mod + group number = switch to group
-            Key(
-                [mod],
-                i.name,
-                lazy.group[i.name].toscreen(),
-                desc=f"Switch to group {i.name}",
-            ),
+            Key([mod], i.name, lazy.group[i.name].toscreen(), desc=f"Switch to group {i.name}"),
             # mod + shift + group number = switch to & move focused window to group
-            Key(
-                [mod, "shift"],
-                i.name,
-                lazy.window.togroup(i.name, switch_group=True),
-                desc=f"Switch to & move focused window to group {i.name}",
-            ),
-            # Or, use below if you prefer not to switch to that group.
-            # # mod + shift + group number = move focused window to group
-            # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
-            #     desc="move focused window to group {}".format(i.name)),
+            Key([mod, "shift"], i.name, lazy.window.togroup(i.name, switch_group=True), desc=f"Switch to & move focused window to group {i.name}"),
         ]
     )
 
 layouts = [
-    layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
+    layout.Columns(border_focus=colors["mauve"], border_normal=colors["crust"], border_width=3, margin=6),
     layout.Max(),
-    # Try more layouts by unleashing below layouts.
-    # layout.Stack(num_stacks=2),
-    # layout.Bsp(),
-    # layout.Matrix(),
-    # layout.MonadTall(),
-    # layout.MonadWide(),
-    # layout.RatioTile(),
-    # layout.Tile(),
-    # layout.TreeTab(),
-    # layout.VerticalTile(),
-    # layout.Zoomy(),
 ]
 
 widget_defaults = dict(
-    font="JetBrains Mono",
-    fallback="JetBrains Mono",
+    font=DEFAULT_FONT,
     fontsize=12,
     padding=3,
 )
@@ -134,124 +103,128 @@ extension_defaults = widget_defaults.copy()
 
 logo = os.path.join(os.path.dirname(libqtile.resources.__file__), "logo.png")
 
-# Yüksek Kontrastlı Koyu Tema Renkleri
-BAR_BG = "#0f0f14"           # Tamamen koyu, derin siyah/gri arka plan
-ACTIVE_WORKSPACE = "#2dd4bf"     # Parlak ve net mavi (Aktif masaüstü)
-INACTIVE_WORKSPACE = "#4b5563"   # Daha belirgin gri (Aktif olmayanlar)
-TEXT_COLOR = "#f3f4f6"       # Canlı beyaz (Pencere isimleri için)
-WIDGET_COLOR = "#2dd4bf"     # Canlı turkuaz/neon yeşil (Saat ve Sistem bilgileri)
-SEP_COLOR = "#374151"        # Ayraçlar için koyu gri
-WINDOW_NAME_COLOR = "#ffffff" # Koyu beyaz
-
 screens = [
     Screen(
-        # Çubuğumuz en üstte
+        # Barımız ekranın altında, havada asılı (floating) duruyor
         bottom=bar.Bar(
             [
-                # Sayfa/Masaüstü Numaraları
+                # ---------------- WORKSPACES CAPSULE (Sol Taraf) ----------------
+                widget.TextBox(text="", foreground=colors["cyan"], background="#00000000", fontsize=22, padding=0),
                 widget.GroupBox(
                     font=DEFAULT_FONT,
-                    fontsize=14,
+                    fontsize=13,
                     margin_y=3,
                     margin_x=0,
                     padding_y=5,
                     padding_x=8,
-                    borderwidth=3,
-                    active=ACTIVE_WORKSPACE,
-                    inactive=INACTIVE_WORKSPACE,
+                    borderwidth=0,
+                    active=colors["bg"],           # Aktif sayfadaki yazı rengi (Koyu)
+                    inactive=colors["crust"],      # Aktif olmayan sayfa rengi (Hafif silik)
+                    background=colors["cyan"],     # Kapsülün içi tamamen cyan
                     rounded=False,
-                    highlight_color=BAR_BG,
-                    highlight_method="line",
-                    this_current_screen_border=ACTIVE_WORKSPACE,
+                    highlight_method="text",       # Temiz bir metin vurgusu
+                    this_current_screen_border=colors["crust"],
                 ),
-                widget.TextBox(text="|", foreground=SEP_COLOR, padding=10, fontsize=14),
-                # Mevcut pencerenin adı
-                widget.WindowName(foreground=WINDOW_NAME_COLOR, font="JetBrains Mono Bold", fontsize=14, padding=5, width=bar.CALCULATED,),
-                widget.Spacer(),
-                # Sistem Çekmecesi (İkonlar)
-                widget.Systray(padding=5),
-                widget.TextBox(text="|", foreground=SEP_COLOR, padding=10, fontsize=14),
+                widget.TextBox(text="", foreground=colors["cyan"], background="#00000000", fontsize=22, padding=0),
                 
-                # YENİ WIDGET 1: Canlı İnternet Hızı (Sabit Genişlikli)
+                widget.Spacer(length=15),
+                
+                # Mevcut aktif pencerenin adı (Zarif ve minimalist durması için)
+                widget.WindowName(foreground=colors["fg"], font="JetBrainsMono Nerd Font Bold", fontsize=12, padding=5, width=bar.CALCULATED),
+                
+                # Sol taraf bitti, tüm widgetları sağa yaslamak için esnek boşluk atıyoruz
+                widget.Spacer(),
+                
+                # Sistem Çekmecesi (İkonlar arka plana uyum sağlasın diye boşlukta süzülüyor)
+                widget.Systray(padding=5),
+                widget.Spacer(length=15),
+                
+                # ---------------- INTERNET CAPSULE ----------------
+                widget.TextBox(text="", foreground=colors["blue"], background="#00000000", fontsize=22, padding=0),
                 widget.Net(
-                    foreground=WIDGET_COLOR,
+                    background=colors["blue"],
+                    foreground=colors["bg"],
                     font=DEFAULT_FONT,
                     fontsize=12,
                     format="🌐 {down:.1f}{down_suffix} ↓↑ {up:.1f}{up_suffix}",
-                    width=140,              # Widget'ın genişliğini 180 piksele sabitler
-                    width_is_max=True,       # Bu genişliğin maksimum sınır olduğunu belirtir
-                    text_alignment="center", # Yazıyı bu 180 piksellik alanın ortasına hizalar
                 ),
-                widget.TextBox(text="|", foreground=SEP_COLOR, padding=10, fontsize=14),
+                widget.TextBox(text="", foreground=colors["blue"], background="#00000000", fontsize=22, padding=0),
                 
-                # YENİ WIDGET 2: CPU Kullanımı
+                widget.Spacer(length=12),
+                
+                # ---------------- CPU CAPSULE ----------------
+                widget.TextBox(text="", foreground=colors["mauve"], background="#00000000", fontsize=22, padding=0),
                 widget.CPU(
-                    foreground=WIDGET_COLOR,
+                    background=colors["mauve"],
+                    foreground=colors["bg"],
                     font=DEFAULT_FONT,
                     fontsize=12,
                     format="⚙ CPU: {load_percent}%",
-                    width=90,                # Rakamlar kaç hane olursa olsun genişlik 90px kalır
-                    width_is_max=True,
-                    text_alignment="center", # Sağ sol titremesini önlemek için ortaladık
                 ),
-                widget.TextBox(text="|", foreground=SEP_COLOR, padding=10, fontsize=14),
+                widget.TextBox(text="", foreground=colors["mauve"], background="#00000000", fontsize=22, padding=0),
                 
-                # RAM Kullanımı
+                widget.Spacer(length=12),
+                
+                # ---------------- RAM CAPSULE ----------------
+                widget.TextBox(text="", foreground=colors["pink"], background="#00000000", fontsize=22, padding=0),
                 widget.Memory(
-                    foreground=WIDGET_COLOR,
+                    background=colors["pink"],
+                    foreground=colors["bg"],
                     font=DEFAULT_FONT,
                     fontsize=12,
-                    format="RAM: {MemUsed: .0f}{mm}/{MemTotal: .0f}{mm}",
+                    format=" RAM: {MemUsed: .0f}{mm}/{MemTotal: .0f}{mm}",
                 ),
-                widget.TextBox(text="|", foreground=SEP_COLOR, padding=10, fontsize=14),
+                widget.TextBox(text="", foreground=colors["pink"], background="#00000000", fontsize=22, padding=0),
                 
-                # Saat ve Tarih
+                widget.Spacer(length=12),
+                
+                # ---------------- CLOCK CAPSULE ----------------
+                widget.TextBox(text="", foreground=colors["green"], background="#00000000", fontsize=22, padding=0),
                 widget.Clock(
-                    foreground=WIDGET_COLOR,
+                    background=colors["green"],
+                    foreground=colors["bg"],
                     font=DEFAULT_FONT,
                     fontsize=12,
                     format="🕒 %d/%m/%Y - %H:%M",
                 ),
-                widget.TextBox(text="|", foreground=SEP_COLOR, padding=10, fontsize=14),
+                widget.TextBox(text="", foreground=colors["green"], background="#00000000", fontsize=22, padding=0),
                 
-                # ORİJİNAL GERİ SAYIMLI SİSTEM KONTROLÜ (QuickExit)
-                # Tıkladığında "reboot" yazar, bir daha basınca 5 saniye geri sayar
-                widget.QuickExit(
-                    foreground="#f38ba8", # Dikkat çekmesi için kırmızı/pembe tonu
-                    font = DEFAULT_FONT,
-                    fontsize=12,
-                    default_text="⏻ Reboot",
-                    countdown_format="[{}] saniye", # Geri sayım esnasında "[5] saniye" şeklinde görünür
-                    countdown_start=5, # 5'ten geriye sayar
-                    default_cmd="systemctl reboot", # Tetiklenecek sistem komutu (Yeniden başlatma)
-                ),
-                widget.TextBox(text="|", foreground=SEP_COLOR, padding=10, fontsize=14),
+                widget.Spacer(length=12),
                 
+                # ---------------- POWER CAPSULE (Reboot & Shutdown Tek Kapsülde) ----------------
+                widget.TextBox(text="", foreground=colors["red"], background="#00000000", fontsize=22, padding=0),
                 widget.QuickExit(
-                    foreground="#f38ba8", # Kırmızı tonu
+                    background=colors["red"],
+                    foreground=colors["bg"],
                     font=DEFAULT_FONT,
                     fontsize=12,
-                    default_text="[X] Shutdown", # Kare/boş görünmez, her fontta çalışır
-                    countdown_format="[{}] Kapanıyor", 
+                    default_text="⏻ Reboot",
+                    countdown_format="[{}]s",
+                    countdown_start=5,
+                    default_cmd="systemctl reboot",
+                ),
+                # İki buton arası küçük bir iç boşluk
+                widget.TextBox(text="  ", background=colors["red"], padding=0),
+                widget.QuickExit(
+                    background=colors["red"],
+                    foreground=colors["bg"],
+                    font=DEFAULT_FONT,
+                    fontsize=12,
+                    default_text="󰐥 Shutdown",
+                    countdown_format="[{}]s",
                     countdown_start=5,
                     default_cmd="systemctl poweroff",
                 ),
+                widget.TextBox(text="", foreground=colors["red"], background="#00000000", fontsize=22, padding=0),
             ],
-            26,
-            background=BAR_BG,
+            30,                     # Bar yüksekliği (Kapsüller sığsın diye 30 yaptık)
+            background="#00000000", # Arka plan tamamen şeffaf! Böylece kapsüller havada uçuyor hissi veriyor
+            margin=[0, 15, 8, 15],  # Havada asılı durma efekti: alt ve yanlardan boşluk bırakır
         ),
     ),
 ]
 
-# Instead of screens, you can define a function here to specify which Screen
-# should correspond to which Output.
-
 fake_screens: list[Screen] | None = None
-
-# Instead of screens or fake screens, you can define a function here that
-# returns a list of Screen objects based on the list of Outputs; that way you
-# can decide based on e.g. the number of screens, or which ports are plugged
-# in exactly what do render in each bar for each screen.
 generate_screens: Callable[[list[Output]], list[Screen]] | None = None
 
 # Drag floating layouts.
@@ -269,41 +242,23 @@ floats_kept_above = True
 cursor_warp = False
 floating_layout = layout.Floating(
     float_rules=[
-        # Run the utility of `xprop` to see the wm class and name of an X client.
         *layout.Floating.default_float_rules,
-        Match(wm_class="confirmreset"),  # gitk
-        Match(wm_class="makebranch"),  # gitk
-        Match(wm_class="maketag"),  # gitk
-        Match(wm_class="ssh-askpass"),  # ssh-askpass
-        Match(title="branchdialog"),  # gitk
-        Match(title="pinentry"),  # GPG key password entry
+        Match(wm_class="confirmreset"),
+        Match(wm_class="makebranch"),
+        Match(wm_class="maketag"),
+        Match(wm_class="ssh-askpass"),
+        Match(title="branchdialog"),
+        Match(title="pinentry"),
     ]
 )
 auto_fullscreen = True
 focus_on_window_activation = "smart"
 focus_previous_on_window_remove = False
 reconfigure_screens = True
-
-# If things like steam games want to auto-minimize themselves when losing
-# focus, should we respect this or not?
 auto_minimize = True
-
-# When using the Wayland backend, this can be used to configure input devices.
 wl_input_rules = None
-
-# xcursor theme (string or None) and size (integer) for Wayland backend
 wl_xcursor_theme = None
 wl_xcursor_size = 24
-
 idle_timers = []  # type: list
 idle_inhibitors = []  # type: list
-
-# XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this
-# string besides java UI toolkits; you can see several discussions on the
-# mailing lists, GitHub issues, and other WM documentation that suggest setting
-# this string if your java app doesn't work correctly. We may as well just lie
-# and say that we're a working one by default.
-#
-# We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
-# java that happens to be on java's whitelist.
 wmname = "LG3D"
