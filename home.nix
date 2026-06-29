@@ -49,5 +49,6 @@
     fastfetch
     pcmanfm
     git
+    micro
   ];
 }
