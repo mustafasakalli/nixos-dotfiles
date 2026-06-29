@@ -10,9 +10,6 @@ from libqtile.utils import guess_terminal
 mod = "mod4"
 terminal = guess_terminal()
 
-home = os.path.expanduser('~')
-wallpaper_path = os.path.join(home, "dotfiles", "wallpaper.png")
-
 # Tüm widget'larda ortak font kullanmak için
 DEFAULT_FONT = "JetBrains Mono"
 
@@ -130,7 +127,7 @@ WINDOW_NAME_COLOR = "#ffffff" # Koyu beyaz
 
 screens = [
     Screen(
-		wallpaper=wallpaper_path,
+		wallpaper="/home/mustafa/dotfiles/wallpaper.png",
         wallpaper_mode='fill',
         bottom=bar.Bar(
             [
