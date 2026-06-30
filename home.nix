@@ -51,5 +51,6 @@
     git
     micro
     nsxiv
+    fresh-editor
   ];
 }
