@@ -21,6 +21,7 @@
   console.keyMap = "trq";
   
   # Otomatik Çöp Toplama (Garbage Collection)
+  nix.settings.auto-optimise-store = true;
   nix.gc = {
     automatic = true;
     dates = "weekly";       
