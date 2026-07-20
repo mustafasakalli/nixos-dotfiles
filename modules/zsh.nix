@@ -15,7 +15,7 @@
     shellAliases = {
       ll = "ls -l";
       nrs = "sudo nixos-rebuild switch --flake ~/dotfiles#nixos"; 
-      nfu = "nix flake update ~/dotfiles";                        
+      nfu = "nix flake update";                        
       qtile-bak = "geany ~/dotfiles/qtile/config.py";    
       gs  = "git status";
       gcm = "git commit -m";
