@@ -29,15 +29,12 @@
   };
 
   # X11 Görsel Sunucu ve Grafik Arayüz Ayarları (LightDM & Qtile)
+  services.displayManager.defaultSession = "qtile";
+  
   services.xserver = {
-    enable = true; 
+    enable = true;
     displayManager.lightdm.enable = true;
     windowManager.qtile.enable = true;
-
-    xkb = {
-      layout = "tr";
-      variant = "";
-    };
   };
 
   # Kullanıcı Hesabı Tanımlaması (Sistem düzeyinde)

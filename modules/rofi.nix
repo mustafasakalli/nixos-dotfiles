@@ -3,10 +3,10 @@
 {
   programs.rofi = {
     enable = true;
-    terminal = "${pkgs.alacritty}/bin/alacritty";
-    
-    # Rofi'nin içindeki yazı tiplerini, ikonları ve çalışma modlarını ayarlıyoruz
-    extraConfig = {
+
+    # Yeni Home-Manager yapısına uygun settings bloğu
+    settings = {
+      terminal = "${pkgs.alacritty}/bin/alacritty";
       modi = "run,drun,window";
       icon-theme = "Papirus-Dark";
       show-icons = true;
@@ -20,7 +20,7 @@
       sidebar-mode = true;
     };
 
-    # İŞTE BÜYÜ: Nix formatıyla Rofi teması tasarlıyoruz (Modern Minimalist Dark)
+    # Nix formatıyla Rofi teması (Modern Minimalist Dark)
     theme = let
       inherit (config.lib.formats.rasi) mkLiteral;
     in {
@@ -38,7 +38,7 @@
 
       "element-text, element-icon , mode-switcher" = {
         background-color = mkLiteral "transparent";
-        text-color =        mkLiteral "inherit";
+        text-color = mkLiteral "inherit";
       };
 
       "window" = {
@@ -46,7 +46,7 @@
         border = mkLiteral "2px";
         border-color = mkLiteral "@border-col";
         background-color = mkLiteral "@bg-col";
-        border-radius = mkLiteral "12px"; # Yumuşatılmış şık köşeler
+        border-radius = mkLiteral "12px";
       };
 
       "mainbox" = {
