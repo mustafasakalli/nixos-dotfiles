@@ -29,14 +29,27 @@
   };
 
   # X11 Görsel Sunucu ve Grafik Arayüz Ayarları (LightDM & Qtile)
-  services.displayManager.defaultSession = "qtile";
-  
   services.xserver = {
-    enable = true;
-    displayManager.lightdm.enable = true;
-    windowManager.qtile.enable = true;
-  };
+	  enable = true;
+	  displayManager.lightdm.enable = true;
+	  
+	  windowManager.awesome = {
+		  enable = true;
+		  luaModules = with pkgs.luaPackages; [
+		  
+		  ];
+      };
 
+	  #windowManager.qtile = {
+		#enable = true;
+		#package = pkgs.python3.pkgs.qtile;
+	  #};
+
+	  xkb = {
+		layout = "tr";
+		variant = "";
+	  };
+  };
   # Kullanıcı Hesabı Tanımlaması (Sistem düzeyinde)
   users.users.mustafa = {
     isNormalUser = true;

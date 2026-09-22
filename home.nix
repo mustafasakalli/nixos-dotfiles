@@ -17,8 +17,9 @@
   ];
 
   # Qtile Ayar Dosyasını Otomatik Bağlama
-  xdg.configFile."qtile/config.py".source = ./qtile/config.py;
-    
+  # xdg.configFile."qtile/config.py".source = ./qtile/config.py;
+  xdg.configFile."awesome".source = ./awesome; 
+
   home.packages = with pkgs; [
     tree
     bat
@@ -29,5 +30,9 @@
     micro
     nsxiv
     fresh-editor
+    pamixer
+    brightnessctl
+    networkmanagerapplet
+    pavucontrol
   ];
 }
