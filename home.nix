@@ -14,6 +14,7 @@
     ./modules/alacritty.nix
     ./modules/rofi.nix
     ./modules/zsh.nix
+    ./modules/vscodium.nix   
   ];
 
   # Qtile Ayar Dosyasını Otomatik Bağlama
@@ -28,5 +29,6 @@
     git
     micro
     nsxiv
+    vscodium
   ];
 }
