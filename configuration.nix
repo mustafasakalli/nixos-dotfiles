@@ -33,15 +33,22 @@
   
   services.xserver = {
     enable = true;
-    displayManager.lightdm.enable = true;
-
-    windowManager.qtile = {
-        enable = true;
-        package = pkgs.python3.pkgs.qtile;  # veya pkgs.qtile-unwrapped
+  
+    # Türkçe Klavye Düzeni (Hem LightDM hem Qtile için)
+    xkb = {
+      layout = "tr";
+      variant = "";
     };
-    
-      # Oturum dosyası sorununu çözen satır:
+  
+    displayManager.lightdm.enable = true;
+  
+    # Oturum dosyası sorununu çözen satır:
     displayManager.sessionPackages = [ pkgs.python3.pkgs.qtile ];
+  
+    windowManager.qtile = {
+      enable = true;
+      package = pkgs.python3.pkgs.qtile;
+    };
   };
 
   # Kullanıcı Hesabı Tanımlaması (Sistem düzeyinde)
