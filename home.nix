@@ -4,7 +4,7 @@
   # Kullanıcı ve Ev Dizini Bilgileri
   home.username = "mustafa";
   home.homeDirectory = "/home/mustafa";
-  home.stateVersion = "26.05"; 
+  home.stateVersion = "25.05"; 
 
   # Home Manager'ın kendi kendini yönetmesini sağlar
   programs.home-manager.enable = true;
@@ -28,6 +28,5 @@
     git
     micro
     nsxiv
-    fresh-editor
   ];
 }

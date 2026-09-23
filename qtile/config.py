@@ -3,7 +3,7 @@ from collections.abc import Callable
 
 import libqtile.resources
 from libqtile import bar, layout, qtile, widget
-from libqtile.config import Click, Drag, Group, Key, Match, Output, Screen
+from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
@@ -226,8 +226,8 @@ screens = [
     ),
 ]
 
-fake_screens: list[Screen] | None = None
-generate_screens: Callable[[list[Output]], list[Screen]] | None = None
+fake_screens = None
+generate_screens = None
 
 mouse = [
     Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),

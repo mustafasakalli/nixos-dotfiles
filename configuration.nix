@@ -34,7 +34,14 @@
   services.xserver = {
     enable = true;
     displayManager.lightdm.enable = true;
-    windowManager.qtile.enable = true;
+
+    windowManager.qtile = {
+        enable = true;
+        package = pkgs.python3.pkgs.qtile;  # veya pkgs.qtile-unwrapped
+    };
+    
+      # Oturum dosyası sorununu çözen satır:
+    displayManager.sessionPackages = [ pkgs.python3.pkgs.qtile ];
   };
 
   # Kullanıcı Hesabı Tanımlaması (Sistem düzeyinde)
@@ -62,5 +69,5 @@
   # Flakes ve yeni Nix komutlarını aktif ediyoruz
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  system.stateVersion = "26.05";
+  system.stateVersion = "25.05";
 }
