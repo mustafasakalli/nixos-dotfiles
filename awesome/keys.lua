@@ -28,22 +28,12 @@ M.globalkeys = gears.table.join(
     awful.key({ mod }, "d", function () awful.spawn(launcher) end,
         { description = "Rofi aç", group = "Launcher" }),
 
-    -- Pencere yönetimi
-    awful.key({ mod }, "q", function (c) c:kill() end,
-        { description = "Pencereyi kapat", group = "Client" }),
-    awful.key({ mod }, "t", function (c)
-        c.fullscreen = not c.fullscreen
-        c:raise()
-    end, { description = "Tam ekran", group = "Client" }),
-    awful.key({ mod }, "f", function (c) c.floating = not c.floating end,
-        { description = "Pencereyi yüzdür", group = "Client" }),
-
     -- Layout değiştirme (Qtile'daki mod+Tab)
     awful.key({ mod }, "Tab", function () awful.layout.inc(1) end,
         { description = "Sonraki layout", group = "Layout" }),
     awful.key({ mod, "Shift" }, "Tab", function () awful.layout.inc(-1) end,
         { description = "Önceki layout", group = "Layout" }),
-    awful.key({ mod }, "n", awful.tag.incnmaster(1, nil, true),
+    awful.key({ mod }, "n", function ()  awful.tag.incnmaster(1, nil, true) end,
         { description = "Master pencere sayısını artır", group = "Layout" }),
 
     -- Odaklanma (vim tarzı)
@@ -135,12 +125,20 @@ M.clientkeys = gears.table.join(
 -- FARE BAĞLAMALARI (Qtile mouse= karşılığı)
 -- =========================================================================
 M.clientbuttons = gears.table.join(
-    awful.button({}, 1, function (c) c:activate { context = "mouse_click" } end),
+    awful.button({}, 1, function (c)
+        if c and c.activate then
+            c:activate { context = "mouse_click" }
+        end
+    end),
     awful.button({ mod }, 1, function (c)
-        c:activate { context = "mouse_click", action = "mouse_move" }
+        if c and c.activate then
+            c:activate { context = "mouse_click", action = "mouse_move" }
+        end
     end),
     awful.button({ mod }, 3, function (c)
-        c:activate { context = "mouse_click", action = "mouse_resize" }
+        if c and c.activate then
+            c:activate { context = "mouse_click", action = "mouse_resize" }
+        end
     end)
 )
 

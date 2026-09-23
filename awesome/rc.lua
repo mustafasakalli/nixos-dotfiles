@@ -96,7 +96,10 @@ client.connect_signal("manage", function (c)
 end)
 
 client.connect_signal("mouse::enter", function (c)
-    c:activate { context = "mouse_enter", raise = false }
+	if c and c.activate then
+		c:activate { context = "mouse_enter", raise = false }
+	end 
+		
 end)
 
 client.connect_signal("focus",   function (c) c.border_color = beautiful.border_focus  end)

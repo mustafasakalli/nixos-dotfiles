@@ -4,13 +4,13 @@
 local theme = {}
 
 -- === Fontlar ===
-theme.font        = "JetBrainsMono Nerd Font 12"
-theme.font_bold   = "JetBrains Mono Bold 12"
-theme.font_group  = "JetBrains Mono Bold 14"
+theme.font        = "JetBrainsMono Nerd Font 10"
+theme.font_bold   = "JetBrains Mono Bold 10"
+theme.font_group  = "JetBrains Mono Bold 12"
 
 -- === Bar ===
 theme.bar_bg     = "#0f0f14"   -- Qtile: BAR_BG
-theme.bar_height = 26
+theme.bar_height = 22
 
 -- === Qtile'dan gelen renkler ===
 theme.active     = "#2dd4bf"   -- ACTIVE_WORKSPACE
