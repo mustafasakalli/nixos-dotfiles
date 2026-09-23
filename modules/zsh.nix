@@ -19,7 +19,8 @@
       qtile-bak = "geany ~/dotfiles/qtile/config.py";    
       gs  = "git status";
       gcm = "git commit -m";
-      ga  = "git add .";          
+      ga  = "git add .";  
+      ncg = "sudo nix-collect-garbage -d";        
     };
   };
 }

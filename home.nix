@@ -23,7 +23,6 @@
   home.packages = with pkgs; [
     tree
     bat
-    geany
     fastfetch
     pcmanfm
     git
