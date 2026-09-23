@@ -31,6 +31,8 @@
   # X11 Görsel Sunucu ve Grafik Arayüz Ayarları (LightDM & Qtile)
   services.displayManager.defaultSession = "qtile";
   
+  services.displayManager.sessionPackages = [ pkgs.python3.pkgs.qtile ];
+
   services.xserver = {
     enable = true;
   
@@ -43,7 +45,6 @@
     displayManager.lightdm.enable = true;
   
     # Oturum dosyası sorununu çözen satır:
-    displayManager.sessionPackages = [ pkgs.python3.pkgs.qtile ];
   
     windowManager.qtile = {
       enable = true;
