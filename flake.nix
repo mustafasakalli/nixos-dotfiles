@@ -1,16 +1,16 @@
 {
   description = "Mustafa'nin Kusursuz Flake Yapilandirmasi";
-
+   
   inputs = {
-    # Sistem paketleri için ana kaynak (26.05 veya unstable kullanabilirsin)
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    # nixpkgs: unstable yerine stable (nixos-25.05) kullan
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
 
-    # Kullanıcı ayarları için Home Manager kaynağı
+    # home-manager: Sürümle uyumlu olması için release-25.05 dalını kullan
     home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs"; # Çakışma olmasın diye ortak nixpkgs'i kullandırıyoruz
+      url = "github:nix-community/home-manager/release-25.05";
+      inputs.nixpkgs.follows = "nixpkgs"; # nixpkgs'i ortak kullanmaya devam et
     };
-  };
+  }; 
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs: {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
